@@ -82,7 +82,7 @@ new ExtendedDOMJS(elements, queries);
 ### Events
  - on(type, func): Adds an event listener for each element.
  - click(func): Adds a click event listener to each element.
- - Property and Attribute Manipulation
+### Property and Attribute Manipulation
  - prop(propertyName, value): Gets or sets a property for each element.
  - html(innerHTML): Sets the innerHTML of each element.
  - hide(boolean, prop): Hides or shows each element based on a boolean value.
@@ -100,7 +100,7 @@ new ExtendedDOMJS(elements, queries);
 
 ### Utility Functions
 
-####$
+#### $
 ```js 
 $(...queries);
 ```
