@@ -17,7 +17,7 @@ npm install extendeddomjs
 You can import ExtendedDOMJS and its utility functions into your project:
 
 ```js
-const { ExtendedDOMJS, $, $$ } = require("extended-domjs");
+const { ExtendedDOMJS, $, $$ } = require("extendeddomjs");
 ```
 
 ### Basic Example
