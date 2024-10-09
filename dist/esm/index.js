@@ -234,6 +234,7 @@ class ExtendedDOMJS {
             return;
         if (ExtendedDOMJS.isValid(value)) {
             this.forEachElement((e) => (e.dataset[key] = value));
+            return this; // Return 'this' for method chaining
         }
         else {
             if (ExtendedDOMJS.isObject(key)) {
@@ -242,9 +243,10 @@ class ExtendedDOMJS {
                         e.dataset[k] = v;
                     });
                 });
+                return this; // Return 'this' for method chaining
             }
             else {
-                return this.mapElements((e) => e.dataset[key]);
+                return this.mapElements((e) => e.dataset[key]); // Return value(s)
             }
         }
     }

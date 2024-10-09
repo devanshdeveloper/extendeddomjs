@@ -50,7 +50,10 @@ declare class ExtendedDOMJS {
     disable(boolean: boolean): any;
     child(): this;
     removeLastChild(): this;
-    data(key: DataKey | Record<DataKey, DataValue>, value?: DataValue): void | string | void[];
+    data(key: DataKey, value: DataValue): this;
+    data(key: Record<DataKey, DataValue>): this;
+    data(key: DataKey): string | undefined;
+    data(key: Record<DataKey, DataValue>, value?: DataValue): void;
     appendHTML(string: string): this;
     isInViewport(): boolean;
 }

@@ -292,14 +292,19 @@ class ExtendedDOMJS {
   }
 
 
+  data(key: DataKey, value: DataValue): this; // Case 1: key with value
+  data(key: Record<DataKey, DataValue>): this; // Case 2: object of key-value pairs
+  data(key: DataKey): string | undefined; // Case 3: key only returns value
+  data(key: Record<DataKey, DataValue>, value?: DataValue): void; // Case 4: object with optional value
   data(
     key: DataKey | Record<DataKey, DataValue>,
     value?: DataValue
-  ): void | string | void[] | this {
+  ): void | string | this | void[] {
     if (!ExtendedDOMJS.isValid(key)) return;
+    
     if (ExtendedDOMJS.isValid(value)) {
       this.forEachElement((e) => (e.dataset[key as string] = value));
-      return this;
+      return this; // Return 'this' for method chaining
     } else {
       if (ExtendedDOMJS.isObject(key)) {
         this.forEachElement((e) => {
@@ -307,9 +312,9 @@ class ExtendedDOMJS {
             e.dataset[k] = v;
           });
         });
-        return this;
+        return this; // Return 'this' for method chaining
       } else {
-        return this.mapElements((e) => e.dataset[key]);
+        return this.mapElements((e) => e.dataset[key]); // Return value(s)
       }
     }
   }
