@@ -51,7 +51,172 @@ $("#element")
 
 // Create a new element and append it to another element
 $$('p').html('This is a new paragraph').appendTo(el);
+
 ```
+### Complex Example
+```js
+import { ExtendedDOMJS, $, $$ } from "extendeddomjs";
+
+// Create a shopping cart system
+const cartContainer = $$("div")
+  .addClass("cart-container")
+  .styles({
+    width: "300px",
+    padding: "20px",
+    border: "1px solid #ccc",
+    backgroundColor: "#f9f9f9",
+    borderRadius: "8px",
+  });
+
+// Cart items container
+const itemsContainer = $$("div", cartContainer)
+  .addClass("items-container")
+  .styles({
+    maxHeight: "200px",
+    overflowY: "auto",
+    marginBottom: "15px",
+  });
+
+// Total price display
+const totalDisplay = $$("div", cartContainer)
+  .addClass("total-display")
+  .html("Total: $0")
+  .styles({
+    fontSize: "18px",
+    fontWeight: "bold",
+    marginBottom: "15px",
+  });
+
+// Checkout button
+const checkoutButton = $$("button", cartContainer)
+  .addClass("checkout-button")
+  .html("Checkout")
+  .styles({
+    width: "100%",
+    padding: "10px",
+    backgroundColor: "#28a745",
+    color: "#fff",
+    border: "none",
+    borderRadius: "5px",
+    cursor: "pointer",
+  })
+  .disable(true); // Initially disabled since the cart is empty
+
+// Append the cart to the body
+cartContainer.appendTo($("body"));
+
+// List of available products
+const products = [
+  { name: "Apple", price: 1.5 },
+  { name: "Banana", price: 1.0 },
+  { name: "Orange", price: 2.0 },
+];
+
+// Add products to the page
+const productContainer = $$("div")
+  .addClass("product-container")
+  .styles({
+    marginBottom: "20px",
+    display: "flex",
+    gap: "10px",
+  });
+
+products.forEach((product) => {
+  const productCard = $$("div", productContainer)
+    .addClass("product-card")
+    .styles({
+      border: "1px solid #ccc",
+      padding: "10px",
+      borderRadius: "5px",
+      backgroundColor: "#fff",
+    });
+
+  $$("p", productCard).html(`${product.name}: $${product.price}`);
+  $$("button", productCard)
+    .html("Add to Cart")
+    .styles({
+      backgroundColor: "#007bff",
+      color: "#fff",
+      padding: "5px",
+      border: "none",
+      borderRadius: "3px",
+      cursor: "pointer",
+    })
+    .click(() => addToCart(product));
+});
+
+// Append products to the body
+productContainer.appendTo($("body"));
+
+// Cart state
+let cart: { name: string; price: number; quantity: number }[] = [];
+let total = 0;
+
+// Function to add product to the cart
+function addToCart(product: { name: string; price: number }) {
+  const existingProduct = cart.find((item) => item.name === product.name);
+  if (existingProduct) {
+    existingProduct.quantity++;
+  } else {
+    cart.push({ ...product, quantity: 1 });
+  }
+  updateCart();
+}
+
+// Function to remove product from the cart
+function removeFromCart(productName: string) {
+  cart = cart.filter((item) => item.name !== productName);
+  updateCart();
+}
+
+// Function to update the cart UI and total
+function updateCart() {
+  // Clear the items container
+  itemsContainer.html("");
+
+  // Calculate total and populate cart items
+  total = 0;
+  cart.forEach((item) => {
+    total += item.price * item.quantity;
+    const itemRow = $$("div", itemsContainer)
+      .addClass("item-row")
+      .styles({
+        display: "flex",
+        justifyContent: "space-between",
+        marginBottom: "10px",
+      });
+
+    $$("span", itemRow).html(`${item.name} x${item.quantity}`);
+    $$("span", itemRow).html(`$${(item.price * item.quantity).toFixed(2)}`);
+
+    $$("button", itemRow)
+      .html("Remove")
+      .styles({
+        backgroundColor: "#dc3545",
+        color: "#fff",
+        border: "none",
+        borderRadius: "3px",
+        cursor: "pointer",
+      })
+      .click(() => removeFromCart(item.name));
+  });
+
+  // Update total display
+  totalDisplay.html(`Total: $${total.toFixed(2)}`);
+
+  // Enable checkout button if there are items in the cart
+  checkoutButton.disable(cart.length === 0);
+}
+
+// Handle checkout
+checkoutButton.click(() => {
+  alert(`Checking out with a total of $${total.toFixed(2)}!`);
+  cart = [];
+  updateCart();
+});
+
+```
+
 
 ## API Reference
 

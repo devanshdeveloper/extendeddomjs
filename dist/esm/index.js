@@ -169,7 +169,9 @@ class ExtendedDOMJS {
     prop(prop, value) {
         if (ExtendedDOMJS.isString(prop)) {
             if (value === undefined) {
-                return this.mapElements((e) => e[prop]);
+                const values = this.mapElements((e) => e[prop]);
+                // If accessing a property, return the first element's value only if it's a single-element selection
+                return values.length === 1 ? values[0] : values;
             }
             else {
                 this.forEachElement((e) => {

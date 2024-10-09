@@ -39,13 +39,15 @@ declare class ExtendedDOMJS {
     appendTo(to: ExtendedDOMJS): this;
     html(): string[];
     html(value: string): this;
-    attr(attrName: string | Record<string, any>, value?: string | undefined): any[] | this;
-    prop(prop: string | Record<string, any>, value?: string | undefined): any[] | this;
+    attr(attrName: Record<string, any>): this[];
+    attr(attrName: string, value?: string): this;
+    attr(attrName: string, value?: undefined): any[];
+    prop(prop: string | Record<string, any>, value?: string | undefined): any | this;
     styles(): CSSStyleDeclaration[];
     styles(styles: Styles): this;
     remove(): this;
     hide(boolean?: boolean, prop?: string): this;
-    disable(boolean: boolean): any[] | this;
+    disable(boolean: boolean): any;
     child(): this;
     removeLastChild(): this;
     data(key: DataKey | Record<DataKey, DataValue>, value?: DataValue): void | string | void[];

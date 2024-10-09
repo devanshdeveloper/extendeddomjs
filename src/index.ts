@@ -188,6 +188,10 @@ class ExtendedDOMJS {
     }
   }
 
+  attr(attrName: Record<string, any>): this[];
+  attr(attrName: string, value?: string): this;
+  attr(attrName: string, value?: undefined): any[];
+
   attr(
     attrName: string | Record<string, any>,
     value?: string | undefined
@@ -211,13 +215,17 @@ class ExtendedDOMJS {
     }
   }
 
+
+
   prop(
     prop: string | Record<string, any>,
     value?: string | undefined
-  ): any[] | this {
+  ): any | this {
     if (ExtendedDOMJS.isString(prop)) {
       if (value === undefined) {
-        return this.mapElements((e) => e[prop as HTMLElementProps]);
+        const values = this.mapElements((e) => e[prop as HTMLElementProps]);
+        // If accessing a property, return the first element's value only if it's a single-element selection
+        return values.length === 1 ? values[0] : values;
       } else {
         this.forEachElement((e) => {
           (e as HTMLElement & Record<string, any>)[prop] = value;
@@ -233,6 +241,8 @@ class ExtendedDOMJS {
       return this;
     }
   }
+  
+  
   styles(): CSSStyleDeclaration[];
   styles(styles: Styles): this;
 
