@@ -1,8 +1,8 @@
 {
   "name": "extendeddomjs",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A lightweight JavaScript utility for DOM manipulation.",
-  "main": "dist/cjs/index.js",
+  "main": "dist/esm/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "scripts": {

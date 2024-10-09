@@ -290,13 +290,16 @@ class ExtendedDOMJS {
       }
     });
   }
+
+
   data(
     key: DataKey | Record<DataKey, DataValue>,
     value?: DataValue
-  ): void | string | void[] {
+  ): void | string | void[] | this {
     if (!ExtendedDOMJS.isValid(key)) return;
     if (ExtendedDOMJS.isValid(value)) {
       this.forEachElement((e) => (e.dataset[key as string] = value));
+      return this;
     } else {
       if (ExtendedDOMJS.isObject(key)) {
         this.forEachElement((e) => {
@@ -304,6 +307,7 @@ class ExtendedDOMJS {
             e.dataset[k] = v;
           });
         });
+        return this;
       } else {
         return this.mapElements((e) => e.dataset[key]);
       }
