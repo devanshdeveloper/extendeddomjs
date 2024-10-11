@@ -27,6 +27,7 @@ declare class ExtendedDOMJS {
     get Text(): string;
     get classes(): DOMTokenList | undefined;
     get length(): number;
+    get lastChild(): this;
     get isChecked(): boolean | undefined;
     set HTML(value: string);
     setEls(elements: HTMLElement[]): this;

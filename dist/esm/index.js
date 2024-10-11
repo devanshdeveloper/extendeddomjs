@@ -81,6 +81,11 @@ class ExtendedDOMJS {
     get length() {
         return this.els.length;
     }
+    get lastChild() {
+        return this.setEls([
+            this.el?.children[this.el?.children.length - 1],
+        ]);
+    }
     get isChecked() {
         return this.el ? this.el.checked : undefined;
     }

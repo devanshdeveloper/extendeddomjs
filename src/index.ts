@@ -111,6 +111,12 @@ class ExtendedDOMJS {
     return this.els.length;
   }
 
+  get lastChild(): this {
+    return this.setEls([
+      this.el?.children[this.el?.children.length - 1] as HTMLElement,
+    ]);
+  }
+
   get isChecked(): boolean | undefined {
     return this.el ? (this.el as HTMLInputElement).checked : undefined;
   }
@@ -215,8 +221,6 @@ class ExtendedDOMJS {
     }
   }
 
-
-
   prop(
     prop: string | Record<string, any>,
     value?: string | undefined
@@ -241,8 +245,7 @@ class ExtendedDOMJS {
       return this;
     }
   }
-  
-  
+
   styles(): CSSStyleDeclaration[];
   styles(styles: Styles): this;
 
@@ -291,7 +294,6 @@ class ExtendedDOMJS {
     });
   }
 
-
   data(key: DataKey, value: DataValue): this; // Case 1: key with value
   data(key: Record<DataKey, DataValue>): this; // Case 2: object of key-value pairs
   data(key: DataKey): string | undefined; // Case 3: key only returns value
@@ -301,7 +303,7 @@ class ExtendedDOMJS {
     value?: DataValue
   ): void | string | this | void[] {
     if (!ExtendedDOMJS.isValid(key)) return;
-    
+
     if (ExtendedDOMJS.isValid(value)) {
       this.forEachElement((e) => (e.dataset[key as string] = value));
       return this; // Return 'this' for method chaining
